@@ -1,0 +1,10 @@
+custom_topic_button_enabled:
+  default: true
+custom_topic_button_url:
+  default: "https://www.discourse.org"
+custom_topic_button_title:
+  default: "Button description here.."
+custom_topic_button_label:
+  default: "Click Me"
+custom_topic_button_icon:
+  default: ""
