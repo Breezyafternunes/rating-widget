@@ -1,46 +1,76 @@
-<script type="text/discourse-plugin" version="0.8">
-  const currentUser = api.getCurrentUser();
+<script>
+ // Button Click Event Handler
+$(".rate-button").click(function () {
+  const postID = $(this).closest(".topic-body").data("post-id");
+  const topicID = $(this).closest(".topic-body").data("topic-id");
+  handleRateButtonClick(postID, topicID);
+});
 
-  api.registerTopicFooterButton({
-    id: "discourse-custom-topic-button",
-    priority: 0,
-    icon() {
-      if (settings.custom_topic_button_icon.length) {
-        return settings.custom_topic_button_icon;
-      }
-    },
-    translatedLabel() {
-      return settings.custom_topic_button_title;
-    },
-    translatedTitle() {
-      return settings.custom_topic_button_label;
-    },
-    action() {
-      const topicButtonUrl = settings.custom_topic_button_url;
-      let url = topicButtonUrl
+// Pop-up Handling Functions
+function handleRateButtonClick(postID, topicID) {
+  // Show the pop-up dialog when the button is clicked
+  $("#ratingDialog").show();
 
-      if (this.topic) {
-        url = url
-          .replace("<TOPIC_ID>", this.topic.id)
-          .replace("<TOPIC_TITLE>", this.topic.title)
-          .replace("<TOPIC_SLUG>", this.topic.slug);
-      }
-
-      if (currentUser) {
-        url = url
-          .replace("<USER_ID>", currentUser.id)
-          .replace("<USERNAME>", currentUser.username)
-      }
-
-      window.open(url, "_blank");
+  // Handle the rating stars interaction
+  $(".rating-stars .star").hover(
+    function () {
+      $(this).prevAll(".star").addClass("active");
+      $(this).addClass("active");
     },
-    dropdown() {
-      return this.site.mobileView;
-    },
-    classNames: ["discourse-custom-topic-button"],
-    dependentKeys: ["topic.id", "topic.title", "topic.slug"],
-    displayed() {
-      return settings.custom_topic_button_enabled;
+    function () {
+      $(this).prevAll(".star").removeClass("active");
+      $(this).removeClass("active");
     }
+  );
+
+  // Handle the submit button click
+  $(".submit-button").click(function () {
+    // Get the selected rating value
+    const ratingValue = $(".rating-stars .star.active").data("rating");
+
+    // Hide the pop-up dialog
+    $("#ratingDialog").hide();
+
+    // Pass the ratingValue and topicID to the function for saving the rating
+    saveRating(postID, topicID, ratingValue);
+  });
+}
+
+function saveRating(postID, topicID, ratingValue) {
+  // Use the Discourse API to save the rating as text for the post
+  const ratingField = "rating";
+  api.ajax(`/posts/${postID}/custom_fields`, {
+    type: "PUT",
+    data: {
+      custom_fields: {
+        [ratingField]: ratingValue.toString(),
+      },
+    },
+  });
+}
+  api.onPageChange(() => {
+    const categoriesToTarget = [".category-mock-library-of-catechesis", ".category-library"];
+
+    categoriesToTarget.forEach((categorySelector) => {
+      $(categorySelector).find(".topic-list-item").each(function () {
+        if ($(this).find(".rate-button").length === 0) {
+          const topicID = $(this).data("topic-id");
+          const postID = $(this).data("post-id");
+          const rateButton = `
+            <button class="rate-button btn-default topic-footer-button discourse-topic-group-button btn btn-icon-text" data-topic-id="${topicID}">
+              Rate
+            </button>
+          `;
+          $(this).find(".title").append(rateButton);
+        }
+      });
+
+      // Add a click event handler to the "Rate" button using the class selector
+      $(categorySelector).on("click", ".rate-button", function () {
+        const topicID = $(this).data("topic-id");
+        const postID = $(this).closest(".topic-list-item").data("post-id");
+        handleRateButtonClick(postID, topicID);
+      });
+    });
   });
 </script>
