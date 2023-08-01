@@ -46,7 +46,12 @@
   });
 </script>
 
+
+
 <!-- Pop-up dialog HTML -->
+<div id="ratingDialog" class="modal" style="display: none;">
+  <!-- ... (rest of the pop-up dialog content) ... -->
+  <!-- Pop-up dialog HTML -->
 <div id="ratingDialog" class="modal" style="display: none;">
   <div class="modal-content">
     <h2>Rate this post:</h2>
@@ -60,3 +65,46 @@
     <button class="submit-button">Submit</button>
   </div>
 </div>
+  <!-- ... (end of the pop-up dialog content) ... -->
+  <button class="submit-button">Submit</button>
+</div>
+
+<!-- JavaScript function to show the pop-up dialog and handle rating -->
+<script>
+  function showRatingDialog(postID, topicID) {
+    // Show the pop-up dialog when the button is clicked
+    $("#ratingDialog").show();
+
+    // Handle the rating stars interaction
+    $(".rating-stars .star").hover(
+      function () {
+        $(this).prevAll(".star").addClass("active");
+        $(this).addClass("active");
+      },
+      function () {
+        $(this).prevAll(".star").removeClass("active");
+        $(this).removeClass("active");
+      }
+    );
+
+    // Handle the submit button click
+    $(".submit-button").click(function () {
+      // Get the selected rating value
+      const ratingValue = $(".rating-stars .star.active").data("rating");
+
+      // Hide the pop-up dialog after submission
+      $("#ratingDialog").hide();
+
+      // Function to save the rating via the Discourse API
+      const ratingField = "rating";
+      api.ajax(`/posts/${postID}/custom_fields`, {
+        type: "PUT",
+        data: {
+          custom_fields: {
+            [ratingField]: ratingValue.toString(),
+          },
+        },
+      });
+    });
+  }
+</script>
