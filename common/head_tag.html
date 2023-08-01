@@ -33,3 +33,22 @@
   function showPopup() {
     alert("Hello, world!");
   }
+  <!-- Pop-up dialog HTML -->
+<div id="ratingDialog" class="modal" style="display: none;">
+  <div class="modal-content">
+    <h2>Rate this post:</h2>
+    <div class="rating-stars">
+      <i class="star far fa-star" data-rating="1"></i>
+      <i class="star far fa-star" data-rating="2"></i>
+      <i class="star far fa-star" data-rating="3"></i>
+      <i class="star far fa-star" data-rating="4"></i>
+      <i class="star far fa-star" data-rating="5"></i>
+    </div>
+    <button class="submit-button">Submit</button>
+  </div>
+</div>
+
+<!-- Rate button -->
+<button class="btn-default topic-footer-button discourse-custom-topic-button btn btn-icon-text rate-button" data-post-id="POST_ID" data-topic-id="TOPIC_ID">
+  Rate
+</button>
