@@ -80,16 +80,28 @@
       });
     });
   }
+</script>
 
-  // Bind the click event to the "Rate" button
-  $(document).on("click", ".discourse-custom-topic-button", function (event) {
-    event.preventDefault();
-
-    // Get the post ID and topic ID from the data attributes
-    const postID = $(this).data("post-id");
-    const topicID = $(this).data("topic-id");
-
-    // Call the showRatingDialog() function to display the pop-up
+<!-- JavaScript function to initialize the rate button -->
+<script>
+  // Function to handle the rate button click and show the pop-up dialog
+  function handleRateButtonClick(postID, topicID) {
+    // Show the pop-up dialog when the button is clicked
     showRatingDialog(postID, topicID);
-  });
+  }
+
+  // Function to initialize the rate button and pop-up dialog
+  function initializeRateButton() {
+    $(".btn-default.topic-footer-button.discourse-custom-topic-button.btn.btn-icon-text").click(function () {
+      const postID = $(this).data("post-id");
+      const topicID = $(this).data("topic-id");
+      handleRateButtonClick(postID, topicID);
+
+      // Prevent the default behavior of the "Rate" button
+      return false;
+    });
+  }
+
+  // Execute the initialization function when the page changes
+  api.onPageChange(initializeRateButton);
 </script>
