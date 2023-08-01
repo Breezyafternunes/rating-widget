@@ -17,9 +17,8 @@
       return settings.custom_topic_button_label;
     },
     action() {
-      // Trigger the rate button click event
-      const rateButton = document.querySelector(".rate-button");
-      rateButton.click();
+      // Show the popup when the "Rate" button is clicked
+      showPopup();
 
       // Prevent the default behavior of the "Rate" button
       return false;
@@ -50,53 +49,39 @@
   </div>
 </div>
 
-<!-- JavaScript function to show the pop-up dialog and handle rating -->
+<!-- JavaScript function to show the popup and handle rating -->
 <script>
-  function showRatingDialog(postID, topicID) {
-    // Show the pop-up dialog when the button is clicked
-    $("#ratingDialog").show();
+  // Function to show the popup
+  function showPopup() {
+    const popup = document.getElementById("ratingDialog");
+    popup.style.display = "block";
+  }
 
-    // Handle the rating stars interaction
-    $(".rating-stars .star").hover(
-      function () {
-        $(this).prevAll(".star").addClass("active");
-        $(this).addClass("active");
-      },
-      function () {
-        $(this).prevAll(".star").removeClass("active");
-        $(this).removeClass("active");
-      }
-    );
+  // Function to hide the popup
+  function hidePopup() {
+    const popup = document.getElementById("ratingDialog");
+    popup.style.display = "none";
+  }
 
-    // Handle the submit button click
-    $(".submit-button").click(function () {
-      // Get the selected rating value
-      const ratingValue = $(".rating-stars .star.active").data("rating");
+  // Handle the submit button click
+  document.querySelector(".submit-button").addEventListener("click", function () {
+    // Get the selected rating value
+    const ratingValue = document.querySelector(".rating-stars .star.active").dataset.rating;
 
-      // Hide the pop-up dialog after submission
-      $("#ratingDialog").hide();
+    // Hide the popup after submission
+    hidePopup();
 
-      // Function to save the rating via the Discourse API
-      const ratingField = "rating";
-      api.ajax(`/posts/${postID}/custom_fields`, {
-        type: "PUT",
-        data: {
-          custom_fields: {
-            [ratingField]: ratingValue.toString(),
-          },
+    // Function to save the rating via the Discourse API
+    const ratingField = "rating";
+    api.ajax(`/posts/${postID}/custom_fields`, {
+      type: "PUT",
+      data: {
+        custom_fields: {
+          [ratingField]: ratingValue.toString(),
         },
-      });
+      },
     });
-  }
-</script>
-
-<!-- JavaScript function to initialize the rate button -->
-<script>
-  // Function to handle the rate button click and show the pop-up dialog
-  function handleRateButtonClick(postID, topicID) {
-    // Show the pop-up dialog when the button is clicked
-    showRatingDialog(postID, topicID);
-  }
+  });
 
   // Function to initialize the rate button and pop-up dialog
   function initializeRateButton() {
@@ -112,4 +97,30 @@
 
   // Execute the initialization function when the page changes
   api.onPageChange(initializeRateButton);
+
+  api.onPageChange(() => {
+    const categoriesToTarget = [".category-mock-library-of-catechesis", ".category-library"];
+
+    categoriesToTarget.forEach((categorySelector) => {
+      $(categorySelector).find(".topic-list-item").each(function () {
+        if ($(this).find(".rate-button").length === 0) {
+          const topicID = $(this).data("topic-id");
+          const postID = $(this).data("post-id");
+          const rateButton = `
+            <button class="rate-button btn-default topic-footer-button discourse-topic-group-button btn btn-icon-text" data-topic-id="${topicID}">
+              Rate
+            </button>
+          `;
+          $(this).find(".title").append(rateButton);
+        }
+      });
+
+      // Add a click event handler to the "Rate" button using the class selector
+      $(categorySelector).on("click", ".rate-button", function () {
+        const topicID = $(this).data("topic-id");
+        const postID = $(this).closest(".topic-list-item").data("post-id");
+        handleRateButtonClick(postID, topicID);
+      });
+    });
+  });
 </script>
