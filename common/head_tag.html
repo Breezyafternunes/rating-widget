@@ -16,6 +16,14 @@
     translatedTitle() {
       return settings.custom_topic_button_label;
     },
+    action() {
+      // Trigger the rate button click event
+      const rateButton = document.querySelector(".rate-button");
+      rateButton.click();
+
+      // Prevent the default behavior of the "Rate" button
+      return false;
+    },
     dropdown() {
       return this.site.mobileView;
     },
