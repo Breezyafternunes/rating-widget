@@ -12,34 +12,12 @@
     });
   }
 
+  <!-- JavaScript function to initialize the rate button -->
+<script>
   // Function to handle the rate button click and show the pop-up dialog
   function handleRateButtonClick(postID, topicID) {
     // Show the pop-up dialog when the button is clicked
-    $("#ratingDialog").show();
-
-    // Handle the rating stars interaction
-    $(".rating-stars .star").hover(
-      function () {
-        $(this).prevAll(".star").addClass("active");
-        $(this).addClass("active");
-      },
-      function () {
-        $(this).prevAll(".star").removeClass("active");
-        $(this).removeClass("active");
-      }
-    );
-
-    // Handle the submit button click
-    $(".submit-button").click(function () {
-      // Get the selected rating value
-      const ratingValue = $(".rating-stars .star.active").data("rating");
-
-      // Hide the pop-up dialog after submission
-      $("#ratingDialog").hide();
-
-      // Pass the ratingValue and postID to the function for saving the rating
-      saveRating(postID, ratingValue);
-    });
+    showRatingDialog(postID, topicID);
   }
 
   // Function to initialize the rate button and pop-up dialog
@@ -49,9 +27,19 @@
       const topicID = $(this).data("topic-id");
       handleRateButtonClick(postID, topicID);
 
+      // Add your custom action code here (optional)
+      // For example:
+      console.log("Rate button clicked!");
+
+
       // Prevent the default behavior of the "Rate" button
       return false;
     });
+  }
+
+  // Execute the initialization function when the page changes
+  api.onPageChange(initializeRateButton);
+</script>
 
     const categoriesToTarget = [".category-mock-library-of-catechesis", ".category-library"];
 
