@@ -1,7 +1,6 @@
 <!-- Code from the existing theme component that adds the "Rate" button -->
 <script type="text/discourse-plugin" version="0.8">
-  const currentUser = api.getCurrentUser();
-
+  // Register the "Rate" button
   api.registerTopicFooterButton({
     id: "discourse-custom-topic-button",
     priority: 0,
@@ -17,11 +16,8 @@
       return settings.custom_topic_button_label;
     },
     action() {
-      // Show the popup when the "Rate" button is clicked
+      // Call our custom function to show the popup
       showPopup();
-
-      // Prevent the default behavior of the "Rate" button
-      return false;
     },
     dropdown() {
       return this.site.mobileView;
@@ -32,95 +28,9 @@
       return settings.custom_topic_button_enabled;
     }
   });
-</script>
 
-<!-- Pop-up dialog HTML -->
-<div id="ratingDialog" class="modal" style="display: none;">
-  <div class="modal-content">
-    <h2>Rate this post:</h2>
-    <div class="rating-stars">
-      <i class="star far fa-star" data-rating="1"></i>
-      <i class="star far fa-star" data-rating="2"></i>
-      <i class="star far fa-star" data-rating="3"></i>
-      <i class="star far fa-star" data-rating="4"></i>
-      <i class="star far fa-star" data-rating="5"></i>
-    </div>
-    <button class="submit-button">Submit</button>
-  </div>
-</div>
-
-<!-- JavaScript function to show the popup and handle rating -->
-<script>
-  // Function to show the popup
+  // Custom function to show the popup
   function showPopup() {
-    const popup = document.getElementById("ratingDialog");
-    popup.style.display = "block";
+    alert("Hello, world!");
   }
-
-  // Function to hide the popup
-  function hidePopup() {
-    const popup = document.getElementById("ratingDialog");
-    popup.style.display = "none";
-  }
-
-  // Handle the submit button click
-  document.querySelector(".submit-button").addEventListener("click", function () {
-    // Get the selected rating value
-    const ratingValue = document.querySelector(".rating-stars .star.active").dataset.rating;
-
-    // Hide the popup after submission
-    hidePopup();
-
-    // Function to save the rating via the Discourse API
-    const ratingField = "rating";
-    api.ajax(`/posts/${postID}/custom_fields`, {
-      type: "PUT",
-      data: {
-        custom_fields: {
-          [ratingField]: ratingValue.toString(),
-        },
-      },
-    });
-  });
-
-  // Function to initialize the rate button and pop-up dialog
-  function initializeRateButton() {
-    $(".btn-default.topic-footer-button.discourse-custom-topic-button.btn.btn-icon-text").click(function () {
-      const postID = $(this).data("post-id");
-      const topicID = $(this).data("topic-id");
-      handleRateButtonClick(postID, topicID);
-
-      // Prevent the default behavior of the "Rate" button
-      return false;
-    });
-  }
-
-  // Execute the initialization function when the page changes
-  api.onPageChange(initializeRateButton);
-
-  api.onPageChange(() => {
-    const categoriesToTarget = [".category-mock-library-of-catechesis", ".category-library"];
-
-    categoriesToTarget.forEach((categorySelector) => {
-      $(categorySelector).find(".topic-list-item").each(function () {
-        if ($(this).find(".rate-button").length === 0) {
-          const topicID = $(this).data("topic-id");
-          const postID = $(this).data("post-id");
-          const rateButton = `
-            <button class="rate-button btn-default topic-footer-button discourse-topic-group-button btn btn-icon-text" data-topic-id="${topicID}">
-              Rate
-            </button>
-          `;
-          $(this).find(".title").append(rateButton);
-        }
-      });
-
-      // Add a click event handler to the "Rate" button using the class selector
-      $(categorySelector).on("click", ".rate-button", function () {
-        const topicID = $(this).data("topic-id");
-        const postID = $(this).closest(".topic-list-item").data("post-id");
-        handleRateButtonClick(postID, topicID);
-      });
-    });
-  });
 </script>
