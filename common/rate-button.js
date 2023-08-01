@@ -28,13 +28,20 @@ function handleRateButtonClick(postID, topicID) {
     // Get the selected rating value
     const ratingValue = $(".rating-stars .star.active").data("rating");
 
-    // Hide the pop-up dialog
+    // Hide the pop-up dialog after submission
     $("#ratingDialog").hide();
 
     // Pass the ratingValue and topicID to the function for saving the rating
     saveRating(postID, topicID, ratingValue);
   });
 }
+
+// Button Click Event Handler
+$(document).on("click", ".rate-button", function () {
+  const postID = $(this).closest(".topic-body").data("post-id");
+  const topicID = $(this).closest(".topic-body").data("topic-id");
+  handleRateButtonClick(postID, topicID);
+});
 
 function saveRating(postID, topicID, ratingValue) {
   // Use the Discourse API to save the rating as text for the post
@@ -48,6 +55,7 @@ function saveRating(postID, topicID, ratingValue) {
     },
   });
 }
+
   api.onPageChange(() => {
     const categoriesToTarget = [".category-mock-library-of-catechesis", ".category-library"];
 
