@@ -18,7 +18,7 @@
     },
     action() {
       const topicButtonUrl = settings.custom_topic_button_url;
-      let url = topicButtonUrl
+      let url = topicButtonUrl;
 
       if (this.topic) {
         url = url
@@ -30,7 +30,7 @@
       if (currentUser) {
         url = url
           .replace("<USER_ID>", currentUser.id)
-          .replace("<USERNAME>", currentUser.username)
+          .replace("<USERNAME>", currentUser.username);
       }
 
       window.open(url, "_blank");
@@ -46,12 +46,7 @@
   });
 </script>
 
-
-
 <!-- Pop-up dialog HTML -->
-<div id="ratingDialog" class="modal" style="display: none;">
-  <!-- ... (rest of the pop-up dialog content) ... -->
-  <!-- Pop-up dialog HTML -->
 <div id="ratingDialog" class="modal" style="display: none;">
   <div class="modal-content">
     <h2>Rate this post:</h2>
@@ -64,9 +59,6 @@
     </div>
     <button class="submit-button">Submit</button>
   </div>
-</div>
-  <!-- ... (end of the pop-up dialog content) ... -->
-  <button class="submit-button">Submit</button>
 </div>
 
 <!-- JavaScript function to show the pop-up dialog and handle rating -->
@@ -107,4 +99,16 @@
       });
     });
   }
+
+  // Bind the click event to the "Rate" button
+  $(document).on("click", ".discourse-custom-topic-button", function (event) {
+    event.preventDefault();
+
+    // Get the post ID and topic ID from the data attributes
+    const postID = $(this).data("post-id");
+    const topicID = $(this).data("topic-id");
+
+    // Call the showRatingDialog() function to display the pop-up
+    showRatingDialog(postID, topicID);
+  });
 </script>
