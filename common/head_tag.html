@@ -29,7 +29,35 @@
     }
   });
 
-  // Custom function to show the popup
-  function showPopup() {
-    alert("Hello, world!");
-  }
+  / Function to show the popup dialog
+function showPopup() {
+  document.getElementById("ratingDialog").style.display = "block";
+}
+
+// Function to hide the popup dialog
+function hidePopup() {
+  document.getElementById("ratingDialog").style.display = "none";
+}
+
+// Add a click event handler to the rate button using the class selector
+$(".btn-default.topic-footer-button.discourse-custom-topic-button.btn.btn-icon-text").click(function () {
+  // Call the showPopup() function when the button is clicked
+  showPopup();
+});
+
+
+  
+  <!-- Pop-up dialog HTML -->
+<div id="ratingDialog" class="modal" style="display: none;">
+  <div class="modal-content">
+    <h2>Rate this post:</h2>
+    <div class="rating-stars">
+      <i class="star far fa-star" data-rating="1"></i>
+      <i class="star far fa-star" data-rating="2"></i>
+      <i class="star far fa-star" data-rating="3"></i>
+      <i class="star far fa-star" data-rating="4"></i>
+      <i class="star far fa-star" data-rating="5"></i>
+    </div>
+    <button class="submit-button">Submit</button>
+  </div>
+</div>
