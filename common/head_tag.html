@@ -32,41 +32,12 @@
 
 // Function to show the popup dialog
 function showPopup() {
-  $("#popupDialog").show();
-}
-
-// Function to hide the popup dialog
-function hidePopup() {
-  $("#popupDialog").hide();
+  alert("Hello, this is the popup!");
 }
 
 // Add a click event handler to the rate button using the class selector
 $(".rate-button").click(function () {
+
   // Call the showPopup() function when the button is clicked
   showPopup();
 });
-
-// Add a click event handler to the submit button in the popup dialog
-$(".submit-button").click(function () {
-  // Call the hidePopup() function when the submit button is clicked
-  hidePopup();
-});
-
-  
-
-  <!-- HTML code here -->
-<button class="rate-button btn-default topic-footer-button discourse-custom-topic-button btn btn-icon-text">
-  Rate
-</button>
-
-<div class="modal" id="popupDialog">
-  <div class="modal-content">
-    <h2>Rate this post:</h2>
-    <!-- Add your rating stars here (optional) -->
-    <div class="rating-stars">
-      <!-- Add your stars icons here (optional) -->
-
-    </div>
-    <button class="submit-button">Submit</button>
-  </div>
-</div>
