@@ -1,6 +1,3 @@
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.css">
-
 <!-- Code from the existing theme component that adds the "Rate" button -->
 <script type="text/discourse-plugin" version="0.8">
   // Register the "Rate" button
@@ -19,8 +16,50 @@
       return settings.custom_topic_button_label;
     },
     action() {
-      // Call our custom function to show the popup
-      showPopup();
+      // Show the SweetAlert popup when the button is clicked
+      Swal.fire({
+        title: 'Rate this post',
+        html: `
+          <div class="rating-stars">
+            <i class="star far fa-star" data-rating="1"></i>
+            <i class="star far fa-star" data-rating="2"></i>
+            <i class="star far fa-star" data-rating="3"></i>
+            <i class="star far fa-star" data-rating="4"></i>
+            <i class="star far fa-star" data-rating="5"></i>
+          </div>
+        `,
+        showCloseButton: true,
+        showCancelButton: false,
+        showConfirmButton: false,
+        customClass: {
+          popup: "custom-popup",
+        },
+        onOpen: () => {
+          // Handle the rating stars interaction
+          $(".rating-stars .star").hover(
+            function () {
+              $(this).prevAll(".star").addClass("active");
+              $(this).addClass("active");
+            },
+            function () {
+              $(this).prevAll(".star").removeClass("active");
+              $(this).removeClass("active");
+            }
+          );
+
+          // Handle the submit button click
+          $(".submit-button").click(function () {
+            // Get the selected rating value
+            const ratingValue = $(".rating-stars .star.active").data("rating");
+
+            // Close the popup dialog after submission
+            Swal.close();
+
+            // Call the function to save the rating (You can implement this part later)
+            // saveRating(postID, ratingValue);
+          });
+        },
+      });
     },
     dropdown() {
       return this.site.mobileView;
@@ -31,16 +70,4 @@
       return settings.custom_topic_button_enabled;
     }
   });
-
-
-// Function to show the popup dialog
-function showPopup() {
-  alert("Hello, this is the popup!");
-}
-
-// Add a click event handler to the rate button using the class selector
-$(".rate-button").click(function () {
-
-  // Call the showPopup() function when the button is clicked
-  showPopup();
-});
+</script>
