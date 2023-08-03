@@ -1,8 +1,7 @@
-<!-- Include the SweetAlert CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.css">
-
-<!-- Font Awesome icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.css">
 
 <!-- Code from the existing theme component that adds the "Rate" button -->
 <script type="text/discourse-plugin" version="0.8">
@@ -22,8 +21,50 @@
       return settings.custom_topic_button_label;
     },
     action() {
-      // Call our custom function to show the popup
-      showPopup();
+      // Show the SweetAlert popup when the button is clicked
+      Swal.fire({
+        title: 'Rate this post',
+        html: `
+          <div class="rating-stars">
+            <i class="fas fa-star" data-rating="1"></i>
+            <i class="fas fa-star" data-rating="2"></i>
+            <i class="fas fa-star" data-rating="3"></i>
+            <i class="fas fa-star" data-rating="4"></i>
+            <i class="fas fa-star" data-rating="5"></i>
+          </div>
+        `,
+        showCloseButton: true,
+        showCancelButton: false,
+        showConfirmButton: false,
+        customClass: {
+          popup: "custom-popup",
+        },
+        onOpen: () => {
+          // Handle the rating stars interaction
+          $(".rating-stars .fas").hover(
+            function () {
+              $(this).prevAll(".fas").addClass("active");
+              $(this).addClass("active");
+            },
+            function () {
+              $(this).prevAll(".fas").removeClass("active");
+              $(this).removeClass("active");
+            }
+          );
+
+          // Handle the submit button click
+          $(".submit-button").click(function () {
+            // Get the selected rating value
+            const ratingValue = $(".rating-stars .fas.active").data("rating");
+
+            // Close the popup dialog after submission
+            Swal.close();
+
+            // Call the function to save the rating (You can implement this part later)
+            // saveRating(postID, ratingValue);
+          });
+        },
+      });
     },
     dropdown() {
       return this.site.mobileView;
@@ -33,36 +74,5 @@
     displayed() {
       return settings.custom_topic_button_enabled;
     }
-  });
-
-
-  // Function to show the popup dialog
-  function showPopup() {
-    const ratingDialog = `
-      <div class="modal-content">
-        <h2>Rate this post:</h2>
-        <div class="rating-stars">
-          <i class="fas fa-star" data-rating="1"></i>
-          <i class="fas fa-star" data-rating="2"></i>
-          <i class="fas fa-star" data-rating="3"></i>
-          <i class="fas fa-star" data-rating="4"></i>
-          <i class="fas fa-star" data-rating="5"></i>
-        </div>
-        <button class="submit-button">Submit</button>
-      </div>
-    `;
-
-    Swal.fire({
-      title: "Rate this post",
-      html: ratingDialog,
-      showCancelButton: true,
-      confirmButtonText: "Submit",
-    });
-  }
-
-  // Add a click event handler to the rate button using the class selector
-  $(".rate-button").click(function () {
-    // Call the showPopup() function when the button is clicked
-    showPopup();
   });
 </script>
