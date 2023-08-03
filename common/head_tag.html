@@ -45,10 +45,10 @@
           // Handle the rating stars interaction
           $(".rating-stars .star").hover(
             function () {
-              $(this).prevAll(".star").addBack().removeClass("far").addClass("fas"); // Change empty star to colored star on hover
+              $(this).prevAll(".star").addBack().removeClass("far").addClass("fas"); // Change empty star to filled star on hover
             },
             function () {
-              $(this).siblings().removeClass("fas").addClass("far"); // Change colored star to empty star when not hovered
+              $(this).siblings().removeClass("fas").addClass("far"); // Change filled star back to empty star when not hovered
             }
           );
 
