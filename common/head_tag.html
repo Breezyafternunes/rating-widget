@@ -23,35 +23,34 @@
     action() {
       // Show the SweetAlert popup when the button is clicked
       Swal.fire({
-        title: 'Rate this post',
-        html: `
-          <div class="rating-stars">
-            <i class="fas fa-star" data-rating="1"></i>
-            <i class="fas fa-star" data-rating="2"></i>
-            <i class="fas fa-star" data-rating="3"></i>
-            <i class="fas fa-star" data-rating="4"></i>
-            <i class="fas fa-star" data-rating="5"></i>
-          </div>
-        `,
-        showCloseButton: true,
-        showCancelButton: false,
-        showConfirmButton: false,
-        customClass: {
-          popup: "custom-popup",
-        },
-        onOpen: () => {
-          // Handle the rating stars interaction
-          $(".rating-stars .fas").hover(
-            function () {
-              $(this).prevAll(".fas").addClass("active");
-              $(this).addClass("active");
-            },
-            function () {
-              $(this).prevAll(".fas").removeClass("active");
-              $(this).removeClass("active");
-            }
-          );
-
+      title: 'Rate this post',
+      html: `
+        <div class="rating-stars">
+          <i class="far fa-star" data-rating="1"></i>
+          <i class="far fa-star" data-rating="2"></i>
+          <i class="far fa-star" data-rating="3"></i>
+          <i class="far fa-star" data-rating="4"></i>
+          <i class="far fa-star" data-rating="5"></i>
+        </div>
+      `,
+      showCloseButton: true,
+      showCancelButton: false,
+      showConfirmButton: false,
+      customClass: {
+        popup: "custom-popup",
+      },
+      onOpen: () => {
+        // Handle the rating stars interaction
+        $(".rating-stars .far").hover(
+          function () {
+            $(this).addClass("fas").removeClass("far"); // Change empty star to colored star on hover
+            $(this).prevAll(".far").addClass("fas").removeClass("far"); // Change previous empty stars to colored stars
+          },
+          function () {
+            $(this).addClass("far").removeClass("fas"); // Change colored star to empty star when not hovered
+            $(this).prevAll(".fas").addClass("far").removeClass("fas"); // Change previous colored stars to empty stars
+          }
+        );
           // Handle the submit button click
           $(".submit-button").click(function () {
             // Get the selected rating value
