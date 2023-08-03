@@ -28,11 +28,11 @@
         title: 'Rate this post',
         html: `
           <div class="rating-stars">
-            <i class="far fa-star" data-rating="1"></i>
-            <i class="far fa-star" data-rating="2"></i>
-            <i class="far fa-star" data-rating="3"></i>
-            <i class="far fa-star" data-rating="4"></i>
-            <i class="far fa-star" data-rating="5"></i>
+            <i class="star far fa-star" data-rating="1"></i>
+            <i class="star far fa-star" data-rating="2"></i>
+            <i class="star far fa-star" data-rating="3"></i>
+            <i class="star far fa-star" data-rating="4"></i>
+            <i class="star far fa-star" data-rating="5"></i>
           </div>
         `,
         showCloseButton: true,
@@ -42,29 +42,20 @@
           popup: "custom-popup",
         },
         onOpen: () => {
-          // Add CSS to handle the hover effect
-          const hoverColor = "#FCC74C";
-          const starSelector = ".rating-stars .far";
-          const hoverStarCSS = {
-            color: hoverColor,
-            cursor: "pointer",
-          };
-
-          $(".rating-stars .far").hover(
+          // Handle the rating stars interaction
+          $(".rating-stars .star").hover(
             function () {
-              $(this).addClass("fas").removeClass("far").css(hoverStarCSS); // Change empty star to colored star on hover
-              $(this).prevAll(".far").addClass("fas").removeClass("far").css(hoverStarCSS); // Change previous empty stars to colored stars
+              $(this).prevAll(".star").addBack().removeClass("far").addClass("fas"); // Change empty star to colored star on hover
             },
             function () {
-              $(this).addClass("far").removeClass("fas").removeAttr("style"); // Change colored star to empty star when not hovered
-              $(this).prevAll(".fas").addClass("far").removeClass("fas").removeAttr("style"); // Change previous colored stars to empty stars
+              $(this).siblings().removeClass("fas").addClass("far"); // Change colored star to empty star when not hovered
             }
           );
 
           // Handle the submit button click
           $(".submit-button").click(function () {
             // Get the selected rating value
-            const ratingValue = $(".rating-stars .fas.active").data("rating");
+            const ratingValue = $(".rating-stars .fas").length;
 
             // Close the popup dialog after submission
             Swal.close();
@@ -85,3 +76,11 @@
     }
   });
 </script>
+
+<style>
+  /* Add CSS to handle the hover effect */
+  .rating-stars .star {
+    color: #FCC74C;
+    cursor: pointer;
+  }
+</style>
