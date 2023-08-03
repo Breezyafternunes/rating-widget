@@ -38,7 +38,25 @@
       showConfirmButton: false,
       customClass: {
         popup: "custom-popup",
+  // Add CSS to handle the hover effect
+    const hoverColor = "#FCC74C";
+    const starSelector = ".rating-stars .far";
+    const hoverStarCSS = {
+      color: hoverColor,
+      cursor: "pointer",
+    };
+
+    $(".rating-stars .far").hover(
+      function () {
+        $(this).addClass("fas").removeClass("far").css(hoverStarCSS); // Change empty star to colored star on hover
+        $(this).prevAll(".far").addClass("fas").removeClass("far").css(hoverStarCSS); // Change previous empty stars to colored stars
       },
+      function () {
+        $(this).addClass("far").removeClass("fas").removeAttr("style"); // Change colored star to empty star when not hovered
+        $(this).prevAll(".fas").addClass("far").removeClass("fas").removeAttr("style"); // Change previous colored stars to empty stars
+      }
+    );    
+  },
       onOpen: () => {
         // Handle the rating stars interaction
         $(".rating-stars .far").hover(
