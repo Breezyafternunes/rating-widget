@@ -28,11 +28,11 @@
         title: 'Rate this post',
         html: `
           <div class="rating-stars">
-            <button type="button" class="star" data-rating="1"></button>
-            <button type="button" class="star" data-rating="2"></button>
-            <button type="button" class="star" data-rating="3"></button>
-            <button type="button" class="star" data-rating="4"></button>
-            <button type="button" class="star" data-rating="5"></button>
+            <button type="button" class="star" data-rating="1"><i class="far fa-star"></i></button>
+            <button type="button" class="star" data-rating="2"><i class="far fa-star"></i></button>
+            <button type="button" class="star" data-rating="3"><i class="far fa-star"></i></button>
+            <button type="button" class="star" data-rating="4"><i class="far fa-star"></i></button>
+            <button type="button" class="star" data-rating="5"><i class="far fa-star"></i></button>
           </div>
         `,
         showCloseButton: true,
@@ -87,7 +87,10 @@
 <style>
   /* Add CSS to handle the star appearance */
   .rating-stars {
-    font-size: 24px;
+    font-size: 36px;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
   }
   
   .star {
@@ -97,6 +100,10 @@
     border: none;
     cursor: pointer;
     outline: none;
+  }
+  
+  .star i {
+    font-size: inherit;
   }
   
   .star.filled {
