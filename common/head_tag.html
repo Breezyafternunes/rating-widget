@@ -28,11 +28,11 @@
         title: 'Rate this post',
         html: `
           <div class="rating-stars">
-            <i class="star far fa-star fa-2x" data-rating="1"></i>
-            <i class="star far fa-star fa-2x" data-rating="2"></i>
-            <i class="star far fa-star fa-2x" data-rating="3"></i>
-            <i class="star far fa-star fa-2x" data-rating="4"></i>
-            <i class="star far fa-star fa-2x" data-rating="5"></i>
+            <button type="button" class="star" data-rating="1"></button>
+            <button type="button" class="star" data-rating="2"></button>
+            <button type="button" class="star" data-rating="3"></button>
+            <button type="button" class="star" data-rating="4"></button>
+            <button type="button" class="star" data-rating="5"></button>
           </div>
         `,
         showCloseButton: true,
@@ -52,14 +52,13 @@
             $(".rating-stars .star").each(function () {
               const starRating = $(this).data("rating");
               if (starRating <= clickedRating) {
-                $(this).removeClass("far").addClass("fas");
+                $(this).addClass("filled");
               } else {
-                $(this).removeClass("fas").addClass("far");
+                $(this).removeClass("filled");
               }
             });
 
             ratingValue = clickedRating;
-
           });
 
           // Handle the submit button click
@@ -84,3 +83,23 @@
     }
   });
 </script>
+
+<style>
+  /* Add CSS to handle the star appearance */
+  .rating-stars {
+    font-size: 24px;
+  }
+  
+  .star {
+    font-size: inherit;
+    color: #f3f3f3;
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .star.filled {
+    color: #FCC74C;
+  }
+</style>
