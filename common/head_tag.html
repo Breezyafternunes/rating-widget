@@ -46,16 +46,20 @@
 
           // Handle the star clicking interaction
           $(".rating-stars .star").click(function () {
-            ratingValue = $(this).data("rating");
+            const clickedRating = $(this).data("rating");
 
-            // Fill the stars up to the clicked star
+            // Update the rating value and fill the stars accordingly
             $(".rating-stars .star").each(function () {
-              if ($(this).data("rating") <= ratingValue) {
+              const starRating = $(this).data("rating");
+              if (starRating <= clickedRating) {
                 $(this).removeClass("far").addClass("fas");
               } else {
                 $(this).removeClass("fas").addClass("far");
               }
             });
+
+            ratingValue = clickedRating;
+
           });
 
           // Handle the submit button click
@@ -66,7 +70,6 @@
             // You can implement any other logic here, like sending the rating value to the server.
             // For now, let's just log the rating value.
             console.log("Rating value:", ratingValue);
-
           });
         },
       });
