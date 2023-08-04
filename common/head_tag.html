@@ -42,22 +42,31 @@
           popup: "custom-popup",
         },
         onOpen: () => {
+          let ratingValue = 0;
+
           // Handle the star clicking interaction
           $(".rating-stars .star").click(function () {
-            const clickedIndex = $(this).index();
+            ratingValue = $(this).data("rating");
 
             // Fill the stars up to the clicked star
-            $(".rating-stars .star").each(function (index) {
-              if (index <= clickedIndex) {
+            $(".rating-stars .star").each(function () {
+              if ($(this).data("rating") <= ratingValue) {
                 $(this).removeClass("far").addClass("fas");
               } else {
                 $(this).removeClass("fas").addClass("far");
               }
             });
+          });
 
-            // You can implement any other logic here, like closing the popup or sending the rating value.
-            // For now, let's close the popup after clicking a star.
+          // Handle the submit button click
+          $(".submit-button").click(function () {
+            // Close the popup dialog after submission
             Swal.close();
+
+            // You can implement any other logic here, like sending the rating value to the server.
+            // For now, let's just log the rating value.
+            console.log("Rating value:", ratingValue);
+
           });
         },
       });
