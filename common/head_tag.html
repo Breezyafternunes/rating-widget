@@ -42,29 +42,22 @@
           popup: "custom-popup",
         },
         onOpen: () => {
-          const stars = document.querySelectorAll(".rating-stars .star");
+          // Handle the star clicking interaction
+          $(".rating-stars .star").click(function () {
+            const clickedIndex = $(this).index();
 
-          // Function to handle the star clicking interaction
-          function handleStarClick(clickedIndex) {
-            stars.forEach((star, index) => {
+            // Fill the stars up to the clicked star
+            $(".rating-stars .star").each(function (index) {
               if (index <= clickedIndex) {
-                star.classList.remove("far");
-                star.classList.add("fas");
+                $(this).removeClass("far").addClass("fas");
               } else {
-                star.classList.remove("fas");
-                star.classList.add("far");
+                $(this).removeClass("fas").addClass("far");
               }
             });
-          }
 
-          // Handle the star clicking interaction
-          stars.forEach((star, index) => {
-            star.addEventListener("click", () => {
-              handleStarClick(index);
-              // You can implement any other logic here, like closing the popup or sending the rating value.
-              // For now, let's close the popup after clicking a star.
-              Swal.close();
-            });
+            // You can implement any other logic here, like closing the popup or sending the rating value.
+            // For now, let's close the popup after clicking a star.
+            Swal.close();
           });
         },
       });
