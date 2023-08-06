@@ -96,31 +96,26 @@
   text-align: center;
 }
 
+.star-widget .stars {
+  display: flex; /* Display stars horizontally */
+  align-items: center; /* Center stars vertically */
+  margin-bottom: 10px; /* Add some spacing between stars and header */
+}
+
 .star-widget label {
   font-size: 40px;
   color: #444;
   padding: 10px;
-  margin: 5px;
+  margin: 0 5px; /* Add some spacing between stars */
   transition: all 0.2s ease;
-  cursor: pointer; /* Add cursor style to indicate interactivity */
+  cursor: pointer;
 }
 
 .star-widget form {
-  margin-top: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
-.star-widget header {
-  font-size: 20px;
-  color: #fe7;
-  margin-bottom: 10px;
-}
-
-.star-widget .btn {
-  margin-top: 10px;
-} 
 .edit:hover{
   text-decoration: underline;
 }
