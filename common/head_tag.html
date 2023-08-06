@@ -45,21 +45,21 @@
           let ratingValue = 0;
 
           // Handle the star clicking interaction
-          $(".rating-stars .star").click(function () {
-            const clickedRating = $(this).data("rating");
+  $(".rating-stars .star").click(function () {
+    const clickedRating = $(this).data("rating");
 
-            // Update the rating value and fill the stars accordingly
-            $(".rating-stars .star").each(function () {
-              const starRating = $(this).data("rating");
-              if (starRating <= clickedRating) {
-                $(this).addClass("filled");
-              } else {
-                $(this).removeClass("filled");
-              }
-            });
-
-            ratingValue = clickedRating;
-          });
+    // Update the rating value and fill the stars accordingly
+    $(".rating-stars .star").each(function () {
+      const starRating = $(this).data("rating");
+      if (starRating <= clickedRating) {
+        $(this).addClass("filled");
+      } else {
+        $(this).removeClass("filled");
+      }
+    });
+  
+  ratingValue = clickedRating;
+  });
 
           // Handle the submit button click
           $(".submit-button").click(function () {
@@ -102,11 +102,12 @@
     outline: none;
   }
   
-  .star i {
+ .star i {
     font-size: inherit;
   }
   
   .star.filled {
     color: #FCC74C;
+    background-color: #FCC74C; /* Fills the star when clicked */
   }
 </style>
