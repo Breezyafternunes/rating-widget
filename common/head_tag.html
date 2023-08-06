@@ -1,7 +1,5 @@
-<!-- Add Font Awesome CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-<!-- Add SweetAlert2 JS and CSS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.css">
 
@@ -25,84 +23,44 @@
     action() {
       // Show the SweetAlert popup when the button is clicked
       Swal.fire({
-        title: 'Rate this post',
-        html: `
-          <!-- Add the star rating widget -->
-<div class="star-widget">
-  <input type="radio" name="rate" id="rate-5" data-rating="5">
-  <label for="rate-5" class="far fa-star"></label>
-  <input type="radio" name="rate" id="rate-4" data-rating="4">
-  <label for="rate-4" class="far fa-star"></label>
-  <input type="radio" name="rate" id="rate-3" data-rating="3">
-  <label for="rate-3" class="far fa-star"></label>
-  <input type="radio" name="rate" id="rate-2" data-rating="2">
-  <label for="rate-2" class="far fa-star"></label>
-  <input type="radio" name="rate" id="rate-1" data-rating="1">
-  <label for="rate-1" class="far fa-star"></label>
-</div>
-
-        `action() {
-      Swal.fire({
-        title: 'Rate this post',
-        html: `
-          <div class="star-widget">
-            <input type="radio" name="rate" id="rate-5" data-rating="5">
-            <!-- Add other star inputs and labels here -->
-            <button>Post</button>
-          </div>
-          <div class="post">
-            Thanks for rating us!
-            <div class="edit">EDIT</div>
-          </div>
-        `,
-        showCloseButton: true,
-        showCancelButton: false,
-        showConfirmButton: false,
-        customClass: {
-          popup: "custom-popup",
-        },
-        onOpen: () => {
-          $(".star-widget input").change(function () {
-            const clickedRating = $(this).data("rating");
-            $(".star-widget label").each(function () {
-              const starRating = $(this).prev().data("rating");
-              if (starRating <= clickedRating) {
-                $(this).addClass("fas").removeClass("far");
-              } else {
-                $(this).addClass("far").removeClass("fas");
-              }
-            });
-          });
-
-          $(".star-widget label").hover(
-            function () {
-              const hoverRating = $(this).prev().data("rating");
-              $(".star-widget label").each(function () {
-                const starRating = $(this).prev().data("rating");
-                if (starRating <= hoverRating) {
-                  $(this).addClass("fas").removeClass("far");
-                } else {
-                  $(this).addClass("far").removeClass("fas");
-                }
-              });
-            },
-            function () {
-              $(".star-widget label").removeClass("fas").addClass("far");
-            }
-          );
-        },
-      });
-    },
-    ratingValue = clickedRating;
-  });
+      title: 'Rate this post',
+      html: `
+        <div class="rating-stars">
+          <i class="far fa-star" data-rating="1"></i>
+          <i class="far fa-star" data-rating="2"></i>
+          <i class="far fa-star" data-rating="3"></i>
+          <i class="far fa-star" data-rating="4"></i>
+          <i class="far fa-star" data-rating="5"></i>
+        </div>
+      `,
+      showCloseButton: true,
+      showCancelButton: false,
+      showConfirmButton: false,
+      customClass: {
+        popup: "custom-popup",
+      },
+      onOpen: () => {
+        // Handle the rating stars interaction
+        $(".rating-stars .far").hover(
+          function () {
+            $(this).addClass("fas").removeClass("far"); // Change empty star to colored star on hover
+            $(this).prevAll(".far").addClass("fas").removeClass("far"); // Change previous empty stars to colored stars
+          },
+          function () {
+            $(this).addClass("far").removeClass("fas"); // Change colored star to empty star when not hovered
+            $(this).prevAll(".fas").addClass("far").removeClass("fas"); // Change previous colored stars to empty stars
+          }
+        );
           // Handle the submit button click
           $(".submit-button").click(function () {
+            // Get the selected rating value
+            const ratingValue = $(".rating-stars .fas.active").data("rating");
+
             // Close the popup dialog after submission
             Swal.close();
 
-            // You can implement any other logic here, like sending the rating value to the server.
-            // For now, let's just log the rating value.
-            console.log("Rating value:", ratingValue);
+            // Call the function to save the rating (You can implement this part later)
+            // saveRating(postID, ratingValue);
           });
         },
       });
@@ -117,81 +75,3 @@
     }
   });
 </script>
-
-<style>
-  /* Add CSS to handle the star appearance */
-  .rating-stars {
-    font-size: 36px;
-    display: flex;
-    gap: 5px;
-    justify-content: center;
-  }
-  
-  .star {
-    font-size: inherit;
-    color: #f3f3f3;
-    background: none;
-    border: none;
-    cursor: pointer;
-    outline: none;
-  }
-  
- .star i {
-    font-size: inherit;
-  }
-  
-  .star.filled {
-    color: #FCC74C;
-    background-color: #FCC74C; /* Fills the star when clicked */
-  }
-  /* Add CSS to handle the input outline color */
-  .rating-stars input {
-    display: none; /* Hide the default radio input */
-  }
-  
-  .rating-stars label {
-    font-size: inherit;
-    color: #545454; /* Adjusted outline color */
-    background: none;
-    border: 2px solid #545454; /* Adjusted outline color */
-    border-radius: 50%; /* Makes the button look circular */
-    cursor: pointer;
-    outline: none;
-    padding: 5px;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  .rating-stars label i {
-    font-size: inherit;
-  }
-  
-  .rating-stars input:checked + label {
-    color: #FCC74C;
-    background-color: #FCC74C; /* Fills the star when clicked */
-  }
- /* Add CSS to handle the input outline color */
-  .rating-stars input {
-    display: none; /* Hide the default radio input */
-  }
-  
-  .rating-stars label {
-    font-size: inherit;
-    color: #545454; /* Adjusted outline color */
-    background: none;
-    border: 2px solid #545454; /* Adjusted outline color */
-    border-radius: 50%; /* Makes the button look circular */
-    cursor: pointer;
-    outline: none;
-    padding: 5px;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  .rating-stars label i {
-    font-size: inherit;
-  }
-  
-  .rating-stars input:checked + label {
-    color: #FCC74C;
-    background-color: #FCC74C; /* Fills the star when clicked */
-  }
-</style>
