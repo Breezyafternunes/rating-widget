@@ -62,34 +62,37 @@
           popup: "custom-popup",
         },
         onOpen: () => {
-          // Handle star selection
-          $(".star-widget input").click(function () {
+          $(".star-widget input").change(function () {
             const clickedRating = $(this).data("rating");
-            $(".star-widget input").each(function () {
-              const starRating = $(this).data("rating");
+            $(".star-widget label").each(function () {
+              const starRating = $(this).prev().data("rating");
               if (starRating <= clickedRating) {
-                $(this).next().addClass("fas").removeClass("far");
+                $(this).addClass("fas").removeClass("far");
               } else {
-                $(this).next().addClass("far").removeClass("fas");
+                $(this).addClass("far").removeClass("fas");
               }
             });
           });
 
-          // Handle "Post" button click
-          $("button").click(function () {
-            $(".post").show();
-            $(".star-widget").hide();
-          });
-
-          // Handle "Edit" button click
-          $(".edit").click(function () {
-            $(".post").hide();
-            $(".star-widget").show();
-          });
+          $(".star-widget label").hover(
+            function () {
+              const hoverRating = $(this).prev().data("rating");
+              $(".star-widget label").each(function () {
+                const starRating = $(this).prev().data("rating");
+                if (starRating <= hoverRating) {
+                  $(this).addClass("fas").removeClass("far");
+                } else {
+                  $(this).addClass("far").removeClass("fas");
+                }
+              });
+            },
+            function () {
+              $(".star-widget label").removeClass("fas").addClass("far");
+            }
+          );
         },
       });
     },
-
     ratingValue = clickedRating;
   });
           // Handle the submit button click
