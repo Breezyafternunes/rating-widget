@@ -41,6 +41,19 @@
   <label for="rate-1" class="far fa-star"></label>
 </div>
 
+        `action() {
+      Swal.fire({
+        title: 'Rate this post',
+        html: `
+          <div class="star-widget">
+            <input type="radio" name="rate" id="rate-5" data-rating="5">
+            <!-- Add other star inputs and labels here -->
+            <button>Post</button>
+          </div>
+          <div class="post">
+            Thanks for rating us!
+            <div class="edit">EDIT</div>
+          </div>
         `,
         showCloseButton: true,
         showCancelButton: false,
@@ -49,21 +62,33 @@
           popup: "custom-popup",
         },
         onOpen: () => {
-          let ratingValue = 0;
+          // Handle star selection
+          $(".star-widget input").click(function () {
+            const clickedRating = $(this).data("rating");
+            $(".star-widget input").each(function () {
+              const starRating = $(this).data("rating");
+              if (starRating <= clickedRating) {
+                $(this).next().addClass("fas").removeClass("far");
+              } else {
+                $(this).next().addClass("far").removeClass("fas");
+              }
+            });
+          });
 
-          // Handle the star clicking interaction
-  $(".rating-stars input").click(function () {
-    const clickedRating = $(this).data("rating");
+          // Handle "Post" button click
+          $("button").click(function () {
+            $(".post").show();
+            $(".star-widget").hide();
+          });
 
-    // Update the rating value and fill the stars accordingly
-    $(".rating-stars input").each(function () {
-      const starRating = $(this).data("rating");
-      if (starRating <= clickedRating) {
-        $(this).addClass("filled");
-      } else {
-        $(this).removeClass("filled");
-      }
-    });
+          // Handle "Edit" button click
+          $(".edit").click(function () {
+            $(".post").hide();
+            $(".star-widget").show();
+          });
+        },
+      });
+    },
 
     ratingValue = clickedRating;
   });
