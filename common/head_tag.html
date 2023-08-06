@@ -25,6 +25,7 @@
       Swal.fire({
       title: 'Rate this post',
       html: `
+    <div class="container">
         <div class="star-widget">
         <input type="radio" name="rate" id="rate-5">
         <label for="rate-5" class="fas fa-star"></label>
@@ -43,6 +44,7 @@
           </div>
         </form>
       </div>
+    <div/>
       `,
       showCloseButton: true,
       showCancelButton: false,
@@ -88,34 +90,11 @@
 </script>
 
 <style>
-/* Add this CSS to your existing styles */
-/* Add this CSS to your existing styles */
-.star-widget {
+.container {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
-}
-
-.star-widget .stars {
-  display: flex;
-  justify-content: center; /* Center stars horizontally */
-  margin-bottom: 10px; /* Add some spacing between stars and header */
-}
-
-.star-widget label {
-  font-size: 40px;
-  color: #444;
-  padding: 10px;
-  margin: 0 5px; /* Add some spacing between stars */
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-.star-widget form {
-  display: flex;
+  justify-content: center;
   flex-direction: column;
-  align-items: center;
 }
 .edit:hover{
   text-decoration: underline;
