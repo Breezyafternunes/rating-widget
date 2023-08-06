@@ -45,11 +45,11 @@
           let ratingValue = 0;
 
           // Handle the star clicking interaction
-  $(".rating-stars .star").click(function () {
+  $(".rating-stars input").click(function () {
     const clickedRating = $(this).data("rating");
 
     // Update the rating value and fill the stars accordingly
-    $(".rating-stars .star").each(function () {
+    $(".rating-stars input").each(function () {
       const starRating = $(this).data("rating");
       if (starRating <= clickedRating) {
         $(this).addClass("filled");
@@ -106,6 +106,31 @@
   }
   
   .star.filled {
+    color: #FCC74C;
+    background-color: #FCC74C; /* Fills the star when clicked */
+  }
+  /* Add CSS to handle the input outline color */
+  .rating-stars input {
+    display: none; /* Hide the default radio input */
+  }
+  
+  .rating-stars label {
+    font-size: inherit;
+    color: #545454; /* Adjusted outline color */
+    background: none;
+    border: 2px solid #545454; /* Adjusted outline color */
+    border-radius: 50%; /* Makes the button look circular */
+    cursor: pointer;
+    outline: none;
+    padding: 5px;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .rating-stars label i {
+    font-size: inherit;
+  }
+  
+  .rating-stars input:checked + label {
     color: #FCC74C;
     background-color: #FCC74C; /* Fills the star when clicked */
   }
