@@ -91,7 +91,7 @@
 /* Add this CSS to your existing styles */
 .star-widget {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   text-align: center;
 }
@@ -113,8 +113,11 @@
 
 .star-widget form {
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* Set to row for horizontal alignment */
   align-items: center;
+  justify-content: center; /* Center header and button horizontally */
+  flex-wrap: wrap; /* Allow items to wrap if necessary */
+  margin-top: 10px; /* Add some spacing between stars and header/button */
 }
 .edit:hover{
   text-decoration: underline;
