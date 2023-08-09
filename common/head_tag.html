@@ -65,45 +65,19 @@
           }
         );
           // Handle the submit button click
-        $(".submit-button").click(function () {
-          const ratingValue = $(".rating-stars .fas.active").data("rating");
-          const topicId = Discourse.__container__.lookup('controller:topic').get('model.id');
+          $(".submit-button").click(function () {
+            // Get the selected rating value
+            const ratingValue = $(".rating-stars .fas.active").data("rating");
 
-          const apiUrl = `https://vericat.discourse.group/t/${topicId}/custom_fields.json?api_key=62930b1ca3bd5cd7e8d59ce686f92bf99e332daa15df88fc79a707151ebad77c
-Y&api_username=system`;
+            // Close the popup dialog after submission
+            Swal.close();
 
-          const payload = {
-            custom_fields: [
-              {
-                name: "ratings",
-                value: ratingValue
-              }
-            ]
-          };
-
-          fetch(apiUrl, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-          })
-          .then(response => response.json())
-          .then(data => {
-            // Handle success or error
-            console.log('Rating data updated:', data);
-          })
-          .catch(error => {
-            console.error('Error updating rating data:', error);
+            // Call the function to save the rating (You can implement this part later)
+            // saveRating(postID, ratingValue);
           });
-
-          // Close the popup dialog after submission
-          Swal.close();
-        });
-      },
-    });
-  };
-
+        },
+      });
+    },
     dropdown() {
       return this.site.mobileView;
     },
@@ -144,10 +118,10 @@ Y&api_username=system`;
 }
 input:not(:checked) ~ label:hover,
 input:not(:checked) ~ label:hover ~ label{
-  color: #FCC74C;
+  color: #fd4;
 }
 input:checked ~ label{
-  color: #FCC74C;
+  color: #fd4;
 }
 input#rate-5:checked ~ label{
   color: #fe7;
