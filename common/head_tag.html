@@ -64,44 +64,20 @@
             $(this).prevAll(".fas").addClass("far").removeClass("fas"); // Change previous colored stars to empty stars
           }
         );
-         // Handle the submit button click
-$(".submit-button").click(function () {
-  // Get the selected rating value
-  const ratingValue = $(".star-widget input:checked").data("rating");
-  
-  // Modify this part to save the rating using the Discourse API
-  const topicId = Discourse.__container__.lookup('controller:topic').get('model.id');
-  const apiUrl = `https://vericat.discourse.group/t/${topicId}/custom_fields.json?api_key=62930b1ca3bd5cd7e8d59ce686f92bf99e332daa15df88fc79a707151ebad77c&api_username=system`;
+          // Handle the submit button click
+          $(".submit-button").click(function () {
+            // Get the selected rating value
+            const ratingValue = $(".rating-stars .fas.active").data("rating");
 
-  const payload = {
-    custom_fields: [
-      {
-        name: "ratings",
-        value: ratingValue
-      }
-    ]
-  };
+            // Close the popup dialog after submission
+            Swal.close();
 
-  fetch(apiUrl, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
+            // Call the function to save the rating (You can implement this part later)
+            // saveRating(postID, ratingValue);
+          });
+        },
+      });
     },
-    body: JSON.stringify(payload)
-  })
-  .then(response => response.json())
-  .then(data => {
-    // Handle success or error
-    console.log('Rating data updated:', data);
-  })
-  .catch(error => {
-    console.error('Error updating rating data:', error);
-  });
-
-  // Close the popup dialog after submission
-  Swal.close();
-});
-
     dropdown() {
       return this.site.mobileView;
     },
