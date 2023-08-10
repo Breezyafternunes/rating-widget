@@ -3,6 +3,11 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.css">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.css">
+
 <!-- Code from the existing theme component that adds the "Rate" button -->
 <script type="text/discourse-plugin" version="0.8">
   // Register the "Rate" button
@@ -23,53 +28,57 @@
     action() {
       // Show the SweetAlert popup when the button is clicked
       Swal.fire({
-        title: 'Rate this post',
-        html: `
-          <div class="star-widget">
-            <input type="radio" name="rate" id="rate-5">
-            <label for="rate-5" class="fas fa-star"></label>
-            <input type="radio" name="rate" id="rate-4">
-            <label for="rate-4" class="fas fa-star"></label>
-            <input type="radio" name="rate" id="rate-3">
-            <label for="rate-3" class="fas fa-star"></label>
-            <input type="radio" name="rate" id="rate-2">
-            <label for="rate-2" class="fas fa-star"></label>
-            <input type="radio" name="rate" id="rate-1">
-            <label for="rate-1" class="fas fa-star"></label>
+      title: 'Rate this post',
+      html: `
+    <div class="container">
+        <div class="star-widget">
+        <input type="radio" name="rate" id="rate-5">
+        <label for="rate-5" class="fas fa-star"></label>
+        <input type="radio" name="rate" id="rate-4">
+        <label for="rate-4" class="fas fa-star"></label>
+        <input type="radio" name="rate" id="rate-3">
+        <label for="rate-3" class="fas fa-star"></label>
+        <input type="radio" name="rate" id="rate-2">
+        <label for="rate-2" class="fas fa-star"></label>
+        <input type="radio" name="rate" id="rate-1">
+        <label for="rate-1" class="fas fa-star"></label>
+          <form action="#">
+            <header></header>
             <div class="btn">
-              <button type="button" class="submit-button">Post</button>
+              <button type="submit">Post</button>
             </div>
-          </div>
-        `,
-        showCloseButton: true,
-        showCancelButton: false,
-        showConfirmButton: false,
-        customClass: {
-          popup: "custom-popup",
-        },
-        onOpen: () => {
-          // Handle the rating stars interaction
-          $(".star-widget label").hover(
-            function () {
-              $(this).addClass("fas").removeClass("far"); // Change empty star to colored star on hover
-              $(this).prevAll("label").addClass("fas").removeClass("far"); // Change previous empty stars to colored stars
-            },
-            function () {
-              $(this).addClass("far").removeClass("fas"); // Change colored star to empty star when not hovered
-              $(this).prevAll("label.fas").addClass("far").removeClass("fas"); // Change previous colored stars to empty stars
-            }
-          );
-
+          </form>
+      </div>
+    <div/>
+      `,
+      showCloseButton: true,
+      showCancelButton: false,
+      showConfirmButton: false,
+      customClass: {
+        popup: "custom-popup",
+      },
+      onOpen: () => {
+        // Handle the rating stars interaction
+        $(".rating-stars .far").hover(
+          function () {
+            $(this).addClass("fas").removeClass("far"); // Change empty star to colored star on hover
+            $(this).prevAll(".far").addClass("fas").removeClass("far"); // Change previous empty stars to colored stars
+          },
+          function () {
+            $(this).addClass("far").removeClass("fas"); // Change colored star to empty star when not hovered
+            $(this).prevAll(".fas").addClass("far").removeClass("fas"); // Change previous colored stars to empty stars
+          }
+        );
           // Handle the submit button click
           $(".submit-button").click(function () {
             // Get the selected rating value
-            const ratingValue = $(".star-widget input:checked").data("rating");
-
-            // Log the selected rating to the console
-            console.log("Selected rating:", ratingValue);
+            const ratingValue = $(".rating-stars .fas.active").data("rating");
 
             // Close the popup dialog after submission
             Swal.close();
+
+            // Call the function to save the rating (You can implement this part later)
+            // saveRating(postID, ratingValue);
           });
         },
       });
@@ -84,7 +93,6 @@
     }
   });
 </script>
-
 
 <style>
 .swal2-html-container {
