@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.0/dist/sweetalert2.min.css">
 
@@ -53,12 +52,18 @@
             function () {
               $(this).addClass("fas").removeClass("far"); // Change empty star to colored star on hover
               $(this).prevAll("label").addClass("fas").removeClass("far"); // Change previous empty stars to colored stars
+
+              // Show the submit button on star hover
+              $(".submit-button").show();
             },
             function () {
               $(this).addClass("far").removeClass("fas"); // Change colored star to empty star when not hovered
               $(this).prevAll("label.fas").addClass("far").removeClass("fas"); // Change previous colored stars to empty stars
             }
           );
+
+          // Hide the submit button initially
+          $(".submit-button").hide();
 
           // Handle the submit button click
           $(".submit-button").click(function () {
@@ -84,6 +89,7 @@
     }
   });
 </script>
+
 
 <style>
 .swal2-html-container {
