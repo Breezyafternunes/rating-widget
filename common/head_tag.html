@@ -39,7 +39,7 @@
           <form action="#">
             <header style="margin-bottom: 10px;"></header>
             <div class="btn">
-              <button type="submit">Post</button>
+              <button type="button" class="submit-button">Post</button>
             </div>
           </form>
       </div>
@@ -72,17 +72,15 @@
           $(".submit-button").hide();
 
           // Handle the submit button click
-          $(".submit-button").click(function (event) {
-          event.preventDefault(); // Prevent the default form submission behavior
-        
-          // Get the selected rating value
-          const ratingValue = $(".rating-stars .fas.active").data("rating");
-        
-          // Log the rating value
-          console.log("Rating value:", ratingValue);
-        
-          // Close the popup dialog after submission
-          Swal.close();
+          $(".submit-button").click(function () {
+            // Get the selected rating value
+            const ratingValue = $(".star-widget input:checked").data("rating");
+
+            // Log the selected rating to the console
+            console.log("Selected rating:", ratingValue);
+
+            // Close the popup dialog after submission
+            Swal.close();
           });
         },
       });
