@@ -75,14 +75,14 @@
           $(".submit-button").click(function () {
             // Get the selected rating value
             const ratingValue = $(".star-widget input:checked").data("rating");
-          
+
             // Log the selected rating to the console
             console.log("Selected rating:", ratingValue);
-          
+
             // Close the popup dialog after submission
             Swal.close();
           });
-        };
+        },
       });
     },
     dropdown() {
