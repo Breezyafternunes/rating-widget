@@ -72,17 +72,49 @@
           $(".submit-button").hide();
 
           // Handle the submit button click
-          $(".submit-button").click(function () {
-            // Get the selected rating value
-            const ratingValue = $(".star-widget input:checked").data("rating");
-
-            // Log the selected rating to the console
-            console.log("Selected rating:", ratingValue);
-
+        $(".submit-button").click(function () {
+          // Get the selected rating value
+          const ratingValue = $(".star-widget input:checked").data("rating");
+        
+          // Get the current topic ID
+          const topicId = Discourse.__container__.lookup('controller:topic').get('model.id');
+        
+          // Define the API URL
+          const apiUrl = `https://vericat.discourse.group/t/${topicId}/custom_fields.json?api_key=62930b1ca3bd5cd7e8d59ce686f92bf99e332daa15df88fc79a707151ebad77c&api_username=system`;
+        
+          // Define the payload with the rating value
+          const payload = {
+            custom_fields: [
+              {
+                name: "ratings",
+                value: ratingValue
+              }
+            ]
+          };
+        
+          // Send the PUT request to update the custom field with the rating
+          fetch(apiUrl, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          })
+          .then(response => response.json())
+          .then(data => {
+            // Log the response data
+            console.log('Rating data updated:', data);
+        
             // Close the popup dialog after submission
             Swal.close();
+          })
+          .catch(error => {
+            // Log and handle errors
+            console.error('Error updating rating data:', error);
+            // Close the popup dialog after submission (you can choose whether to close in case of an error)
+            Swal.close();
           });
-        },
+        });
       });
     },
     dropdown() {
