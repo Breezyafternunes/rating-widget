@@ -78,7 +78,7 @@
             const topicId = Discourse.__container__.lookup('controller:topic').get('model.id');
           
             // Construct the API URL
-            const apiUrl = `https://vericat.discourse.group/t/${topicId}/custom_fields/ratings`;
+            const apiUrl = `https://vericat.discourse.group/t/${topicId}/custom_fields.json`;
           
             // Send the data to the custom field using the API
             fetch(apiUrl, {
