@@ -75,13 +75,19 @@
           $(".submit-button").click(function () {
             // Get the selected rating value
             const ratingValue = $(".star-widget input:checked").data("rating");
-
-            // Log the selected rating to the console
-            console.log("Selected rating:", ratingValue);
-
-            // Close the popup dialog after submission
-            Swal.close();
-          });
+          
+            // Get the topic ID
+            const topicId = Discourse.__container__.lookup('controller:topic').get('model.id');
+          
+            // Prepare the payload
+            const payload = {
+              custom_fields: [
+                {
+                  name: "ratings", // Change this to the actual custom field name
+                  value: ratingValue,
+                },
+              ],
+            };
         },
       });
     },
